@@ -1,0 +1,31 @@
+Q: Design a Parking Lot System 
+that supports multiple types of vehicles, floors, entry/exit gates, and real-time availability.
+
+1. Requirements Clarification (Ask These)
+You:
+I'd like to clarify a few things before designing:
+Are we dealing with multiple floors and vehicle types? (Yes — Car, Bike, Truck)
+Do we need to handle entry and exit gates? (Yes)
+Do we show real-time availability on screen? (Yes)
+Are there reserved/VIP/handicap spots? (Optional — say we can add later)
+Should we issue a parking ticket with time and spot info? (Yes)
+
+2. High-Level Design (HLD Overview)
+🎯 You say:
+
+The system has several modules:
+ParkingLotManager: central orchestrator
+Floors → Spots → Vehicles
+Entry/Exit Gates
+Ticketing module
+Availability display
+Database to store ticket logs and spot status
+You can optionally mention:
+Use Redis or in-memory cache for real-time availability
+Modular plug-and-play design for scalability
+
+I extended the Parking Lot design using the Factory pattern to decouple creation of 
+vehicle-specific parking managers, and the Strategy pattern to allow for different 
+spot-allocation policies like nearest-to-entry, near elevator, or even priority-based logic. 
+This makes the system flexible and extensible in the real world.
+

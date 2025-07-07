@@ -1,0 +1,29 @@
+Q: Design an Elevator System for a building with multiple elevators. 
+Users can press buttons from floors or inside the elevator. 
+System should assign the best elevator and handle requests efficiently.
+
+
+1. Requirements Clarification (Speak Out)
+✅ Ask these to the interviewer:
+Do we have multiple elevators in the building? (Yes)
+Are there external buttons (on floors) and internal buttons (inside elevator)? (Yes)
+Should elevators optimize for shortest wait time? (Yes)
+
+
+2. High-Level Design (HLD Overview - 2 min)
+You can say:
+I’d divide this into a central controller system that manages the elevators, 
+processes requests, and assigns the best elevator. 
+Each elevator has its own control logic (move, door open/close, etc). 
+I’ll maintain a request queue, and status for each elevator.
+
+I broke down the system into a controller-based architecture with each elevator maintaining its own queue. The scheduler dispatches based on direction and proximity. 
+Movement and doors are simulated with a tick-based method or threads in actual systems.
+Components:
+ElevatorSystem (Controller) – Receives requests, assigns elevators
+Elevators (Multiple) – Individual elevator units
+Buttons (External and Internal)
+Scheduler/Dispatcher – (Part of ElevatorSystem) assigns elevators based on logic
+You can mention:
+Use threads or simulate tick-based movement for elevators.
+Min-heap/PriorityQueue can be used for closest elevator selection.
