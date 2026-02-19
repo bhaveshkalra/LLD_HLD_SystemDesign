@@ -1,10 +1,10 @@
-package com.deepak.cabbooking.service;
+package cabbooking.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import com.deepak.cabbooking.model.Cab;
-import com.deepak.cabbooking.model.Location;
+import cabbooking.model.Cab;
+import cabbooking.model.Location;
 import java.util.List;
 
 public class CabService {

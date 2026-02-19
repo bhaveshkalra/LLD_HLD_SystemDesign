@@ -60,7 +60,6 @@ enum BookingStatus {
 }
 
 class BookingService {
-
     public Booking bookRoom(User user, String hotelId, String roomTypeId,
                             LocalDate from, LocalDate to, int roomCount) {
 
@@ -96,7 +95,3 @@ List<Hotel> searchHotels(String city, LocalDate from, LocalDate to, RoomType typ
     // 3. Return those with availability
 }
 
-
-public class HotelBookingSystem {
-    
-}

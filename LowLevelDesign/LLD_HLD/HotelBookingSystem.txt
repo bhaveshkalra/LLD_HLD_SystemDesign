@@ -1,0 +1,30 @@
+Q: Design a hotel booking system where users can search hotels, check availability, and book rooms for specific dates.
+
+1. Requirements Clarification (Ask These)
+You:
+I’d like to clarify the scope before diving in:
+Are we covering only hotel bookings (not flights)? → (Yes)
+Do users book room types or specific room IDs? → (Room type)
+Should we support search by city/dates? → (Yes)
+Do we allow multiple rooms in one booking? → (Yes)
+Should the system handle concurrent bookings safely? → (Yes)
+
+2. High-Level Design (HLD Overview)
+🎯 Say this:
+The system will consist of the following core services:
+🔹 Services:
+SearchService → by city, dates, room type
+InventoryService → check room availability, lock/unlock
+BookingService → handle payment, confirm booking
+UserService → user info, booking history
+🔹 Data:
+Hotels → Rooms → RoomInventory (per day)
+Use MySQL/Postgres for persistence
+Redis for fast access & locking during peak bookings
+
+
+When a user searches → we check RoomInventory for each date.
+When user proceeds to book:
+Temporarily lock the rooms (in Redis or DB-level lock).
+Once payment is successful, mark as confirmed.
+If failed or timeout, release the locked rooms.
