@@ -226,4 +226,3 @@ class ElevatorNearbyStrategy implements ParkingStrategy {
                 .orElse(null);
     }
 }
-

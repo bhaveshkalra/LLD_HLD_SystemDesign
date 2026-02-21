@@ -1,0 +1,46 @@
+Large-scale contact center routing problem
+
+1. Problem Restatement 
+
+One public customer service phone number
+~100,000 inbound calls per day
+Calls arrive randomly, not evenly spread
+~50,000 agents
+
+Each agent:
+Is logged in or logged out
+Speaks 2 languages
+Can handle one call at a time
+
+Each customer:
+Speaks exactly one language
+
+Moficition Two types of customers:
+Customer Type	SLA Target
+Luxury / Paid	10 seconds
+Free	60 seconds
+
+Goal:
+Route each call to an agent who speaks the same language
+Minimize customer waiting time
+If no agent is immediately available → customer waits in a queue
+
+
+2. High-Level Architecture
+At a high level, the system looks like this:
+Incoming Call
+     |
+Telephony Gateway
+     |
+Call Router
+     |
+Language-based Queue
+     |
+Available Agent
+
+Main Components
+Telephony Gateway
+Call Router
+Agent Management Service
+Language Queues
+Matching & Dispatch Logic
