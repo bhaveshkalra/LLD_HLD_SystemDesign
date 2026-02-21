@@ -1,0 +1,5 @@
+# Visual Studio temp files
+.vs/
+*.user
+*.suo
+*.VC.db
