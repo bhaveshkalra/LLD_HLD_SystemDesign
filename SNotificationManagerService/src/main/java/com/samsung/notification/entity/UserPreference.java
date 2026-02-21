@@ -1,5 +1,3 @@
-package com.samsung.notification.entity;
-
 import jakarta.persistence.*;
 import com.samsung.notification.enums.PopupStyle;
 
@@ -10,13 +8,15 @@ public class UserPreference {
     @Id
     private String userId;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
+    @Pattern(regexp="BUBBLE|HEADSUP|DETAILED")
     private PopupStyle popupStyle;
 
     private boolean enabled;
 
     @Version
-    private Long version;
+    private Long version;   // optimistic locking
 
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
@@ -26,4 +26,3 @@ public class UserPreference {
 
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
-}
