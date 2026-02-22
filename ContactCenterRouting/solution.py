@@ -96,7 +96,7 @@ class PriorityCallQueues:
         return None
 
 class CallRouter:
-    def __init__(self, directory: AgentDirectory, queues: CallQueues):
+    def __init__(self, directory: AgentDirectory, queues: PriorityCallQueues):
         self.directory = directory
         self.queues = queues
 
@@ -134,7 +134,7 @@ def is_sla_violated(call):
 
 if __name__ == "__main__":
     directory = AgentDirectory()
-    queues = CallQueues()
+    queues = PriorityCallQueues()
     router = CallRouter(directory, queues)
 
     # Agents (each knows 2 languages)
