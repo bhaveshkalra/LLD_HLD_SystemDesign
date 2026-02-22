@@ -1,4 +1,4 @@
-from enum import Enum
+﻿from enum import Enum
 from abc import ABC, abstractmethod
 import time
 
@@ -132,15 +132,18 @@ class EntranceGate:
     def __init__(self, factory: ParkingSpotManagerFactory):
         self.factory = factory
 
-    def find_parking_space(self, vehicle_type, spots):
-        manager = self.factory.get_parking_spot_manager(vehicle_type, spots)
-        return manager.find_parking_space()
+    def process_vehicle(self, vehicle, spots):
+        manager = self.factory.get_parking_spot_manager(
+            vehicle.vehicle_type,
+            spots
+        )
+        spot = manager.park_vehicle(vehicle)
 
-    def generate_ticket(self, vehicle, parking_spot):
-        if parking_spot:
-            parking_spot.park_vehicle(vehicle)
-            return Ticket(time.time(), parking_spot, vehicle)
-        return None
+        if not spot:
+            print("No space available")
+            return None
+
+        return Ticket(time.time(), spot, vehicle)
 
 
 class ExitGate:
@@ -172,9 +175,23 @@ if __name__ == "__main__":
 
     vehicle = Vehicle(123, VehicleType.TWO_WHEELER)
 
-    spot = entrance_gate.find_parking_space(vehicle.vehicle_type, spots)
-    ticket = entrance_gate.generate_ticket(vehicle, spot)
+    ticket = entrance_gate.process_vehicle(vehicle, spots)
 
+    """
+    EntranceGate
+         ↓
+    manager.park_vehicle(vehicle)
+         ↓
+    find_parking_space()   ← subclass decides
+         ↓
+    strategy.choose_spot()
+         ↓
+    spot.park_vehicle()
+        ↓
+    Ticket Generated
+        ↓
+    ExitGate.remove_vehicle(ticket)    
+    """
     print("Ticket Generated:", ticket)
 
     # Vehicle leaves
