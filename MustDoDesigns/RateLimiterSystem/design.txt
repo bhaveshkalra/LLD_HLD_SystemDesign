@@ -1,0 +1,42 @@
+Design rate limiter for:
+1M QPS
+10M users
+Horizontally scalable
+
+Architecture->
+Client
+   ↓
+API Gateway (Intercepts requests, Extracts user ID / API key, Calls rate limiter service)
+   ↓
+Rate Limiter Service (Stateless service, )
+   ↓
+Redis Cluster/In-memory store (In-memory, Atomic operations, Supports TTL, Lua scripting)
+   ↓
+Backend Services
+
+Token Bucket in Redis:
+key: user_id
+fields:
+    tokens
+    last_refill
+
+Horizontal Scaling
+Multiple rate limiter instances
+Stateless
+Shared Redis
+
+Token Bucket is most used ->
+1.It allows controlled bursts, is memory efficient, and works well in distributed systems.
+2.Controlled Burst Handling
+Limit: 10 requests per second
+Bucket capacity: 20
+If user was idle for 2 seconds:
+→ Bucket fills to 20
+→ User can instantly send 20 requests
+→ Then refill continues at 10/sec
+
+This is ideal for:
+Mobile clients
+Retry spikes
+UI interactions
+Batch API calls
