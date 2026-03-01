@@ -76,9 +76,8 @@ class Elevator:
         if not self.up_stops and not self.down_stops:
             self.state = ElevatorState.IDLE
             return
-
+        
         self.state = ElevatorState.MOVING
-
         if self.direction == Direction.UP:
             if self.up_stops:
                 target = self.up_stops[0]

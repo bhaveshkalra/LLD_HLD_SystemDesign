@@ -10,7 +10,6 @@ class User:
         self.email = email
         self.mobile = mobile
 
-
 class Split(ABC):
     def __init__(self, user):
         self.user = user
@@ -36,7 +35,6 @@ class Expense:
         self.paid_by = paid_by
         self.amount = amount
         self.splits = splits
-
 
 # ----------------- EXPENSE MANAGER -----------------
 class ExpenseManager:
@@ -66,7 +64,6 @@ class ExpenseManager:
         for i in range(1, total_users):
             splits[i].amount = equal_amount
 
-
     def _validate_exact(self, amount, splits):
         total = round(sum(split.amount for split in splits), 2)
         if total != round(amount, 2):
@@ -78,7 +75,6 @@ class ExpenseManager:
             raise Exception("Percentages do not sum to 100")
         for split in splits:
             split.amount = round((split.percent / 100) * amount, 2)
-
 
     # ----------------- UPDATE BALANCES -----------------
     def _update_balances(self, paid_by, splits):
@@ -98,7 +94,6 @@ class ExpenseManager:
                     no_balance = False
         if no_balance:
             print("No balances")
-
 
     def show_balance(self, user_id):
         no_balance = True
