@@ -89,7 +89,6 @@ class SlidingWindowCounterRateLimiter(RateLimiter):
 
 #4️⃣ Token Bucket -> Tokens refill at fixed rate, Each request consumes 1 token.
 #**Most Important
-
 class TokenBucketRateLimiter(RateLimiter):
     def __init__(self, capacity = 5, refill_rate = 1):
         self.capacity = float(capacity)
@@ -117,3 +116,5 @@ class TokenBucketRateLimiter(RateLimiter):
         with self.lock:
             self.refill(userId)
             return int(self.tokens[userId] + 1e-6)
+        
+
