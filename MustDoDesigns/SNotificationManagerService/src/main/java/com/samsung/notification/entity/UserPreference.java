@@ -10,7 +10,6 @@ public class UserPreference {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Pattern(regexp="BUBBLE|HEADSUP|DETAILED")
     private PopupStyle popupStyle;
 
     private boolean enabled;

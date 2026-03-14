@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Task Manager</h1>
+
+<button onclick="loadTasks()">Load Tasks</button>
+
+<script>
+    async function loadTasks() {
+        const res = await fetch("/api/tasks");
+        const data = await res.json();
+        console.log(data);
+    }
+</script>
+
+</body>
+</html>

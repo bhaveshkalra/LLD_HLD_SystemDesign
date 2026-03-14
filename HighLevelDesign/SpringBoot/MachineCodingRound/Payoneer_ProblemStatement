@@ -1,0 +1,111 @@
+Notification Service
+Problem Statement
+Build a backend service that sends notifications (e.g. emails).
+ Clients can register templates and enqueue notifications based on those templates.
+ The service must avoid duplicate notifications using an idempotencyKey.
+You can use any backend language/framework.
+ For this round, it is OK to use in-memory data structures instead of a real database. We will discuss database design separately.
+
+Requirements
+1. Data Model (in-memory is fine)
+You need to maintain:
+A list/map of templates, each with:
+
+
+id
+name
+channel (e.g. "EMAIL")
+subject
+body
+
+
+A list/map of notifications, each with:
+id
+templateName
+recipient
+data (JSON object with template variables)
+status (e.g. "PENDING", "SENT")
+idempotencyKey
+attempts (number)
+
+
+
+2. APIs to Implement
+a) Register Template
+POST /templates
+Request body (example):
+
+ {
+  "name": "ORDER_CREATED",
+  "channel": "EMAIL",
+  "subject": "Your order {{orderId}} is confirmed",
+  "body": "Hi {{userName}}, your order {{orderId}} is confirmed."
+}
+
+
+Behavior:
+Validate required fields (name, channel, subject, body).
+Create a template with a unique id and store it.
+Response: created template (including id).
+
+
+b) Enqueue Notification
+POST /notifications
+Request body (example):
+
+ {
+  "templateName": "ORDER_CREATED",
+  "recipient": "user@example.com",
+  "data": {
+    "orderId": "o999",
+    "userName": "Alice"
+  },
+  "idempotencyKey": "order-created-o999"
+}
+
+
+Behavior:
+Validate required fields (templateName, recipient, data, idempotencyKey).
+Check that a template with templateName exists:
+If not → return 400.
+Check if a notification with the same idempotencyKey already exists:
+If yes → return the existing notification (do not create a duplicate).
+If no → create and store a new notification with:
+status = "PENDING"
+attempts = 0
+Response: notification object (new or existing).
+
+
+c) Process Pending Notifications
+POST /notifications/process
+Behavior:
+
+Find all notifications with status = "PENDING".
+For each:
+“Send” it by printing/logging something to the console (no real email needed).
+Set status = "SENT" and increment attempts.
+Return a summary (e.g. how many notifications were processed).
+
+
+d) Get Notification Status
+GET /notifications/:id
+Look up the notification by id.
+
+If found → return it.
+
+If not found → return 404.
+
+
+
+3. Testing
+Write a few unit tests for core behavior, for example:
+Enqueue a notification with a valid template → PENDING notification is created.
+
+Enqueue again with the same idempotencyKey → no duplicate is created.
+
+Processing pending notifications changes status from PENDING to SENT.
+
+4. Notes
+You do not need to integrate real email/SMS providers.
+You do not need to implement retry/backoff logic; just a simple “process once” is enough.
+We will discuss idempotency, DB design, and reliability in more depth after the coding part

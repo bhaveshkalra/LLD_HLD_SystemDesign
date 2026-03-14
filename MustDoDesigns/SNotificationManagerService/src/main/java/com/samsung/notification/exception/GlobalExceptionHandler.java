@@ -11,7 +11,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntime(RuntimeException ex) {
-        return ResponseEntity.status(500)
+        return ResponseEntity.status(400)
                 .body(Map.of("error", ex.getMessage()));
     }
 }
